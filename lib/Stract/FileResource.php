@@ -1,7 +1,10 @@
 <?php
 
-namespace AWonderPHP\ResourceManager\abstract;
+namespace AWonderPHP\ResourceManager\Stract;
 
+/**
+ * Abstract class for resources
+ */
 abstract class FileResource
 {
     /**
@@ -10,7 +13,7 @@ abstract class FileResource
      * @var null|string
      */
     protected $mime = null;
-  
+
     /**
      * Algorithm : checksum
      *
@@ -19,15 +22,15 @@ abstract class FileResource
      *
      * @var null|string
      */
-    protected $checksumAlgo = null;
-  
+    protected $checksum = null;
+
     /**
      * Filesystem location, only applicable when a local resource
      *
      * @var null|string
      */
     protected $filepath = null;
-  
+
     /**
      * Modification date of file - may not necessarily match the modification date of the actual
      * file as seen by the filesystem. ISO 8601 in 'Y-m-d\TH:i:sO' - aka date('c')
@@ -35,15 +38,36 @@ abstract class FileResource
      * @var null|string
      */
     protected $lastmod = null;
-  
+
     // subset from parse_url
-  
+
+    /**
+     * The protocol scheme
+     *
+     * @var null|string
+     */
     protected $urlscheme = null;
+
+    /**
+     * The host name
+     *
+     * @var null|string
+     */
     protected $urlhost = null;
+
+    /**
+     * The url path
+     *
+     * @var null|string
+     */
     protected $urlpath = null;
+
+    /**
+     * The query string
+     *
+     * @var null|string
+     */
     protected $urlquery = null;
-  
-  
   
     /**
      * Return the mime type
@@ -54,7 +78,7 @@ abstract class FileResource
     {
         return $this->mime;
     }
-  
+
     /**
      * Return the checksum
      *
@@ -64,7 +88,7 @@ abstract class FileResource
     {
         return $this->checksum;
     }
-  
+
     /**
      * Returns the URI to the resource
      *
@@ -73,16 +97,16 @@ abstract class FileResource
     public function resourceURI()
     {
         $return = '';
-        if (! is_null($this->urlscheme) {
+        if (! is_null($this->urlscheme)) {
             $return = $this->urlscheme . '://';
         }
-        if (! is_null($this->urlhost) {
+        if (! is_null($this->urlhost)) {
             $return .= $this->urlhost;
         }
-        if (! is_null($this>urlpath) {
+        if (! is_null($this->urlpath)) {
             $return .= $this->urlpath;
         }
-        if (! is_null($this->urlquery) {
+        if (! is_null($this->urlquery)) {
             $return .= '?' $this->urlquery;
         }
         if (strlen($return) === 0) {
@@ -98,7 +122,7 @@ abstract class FileResource
      */
     public function getTimestamp()
     {
-        if (is_null($this->lastmod) {
+        if (is_null($this->lastmod)) {
             return null;
         }
         if ($ts = strtotime($this->lastmod)) {
