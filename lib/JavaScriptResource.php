@@ -2,6 +2,9 @@
 
 namespace AWonderPHP\ResourceManager;
 
+/**
+ * A test implementation of the JavaScriptResource interface
+ */
 class JavaScriptResource extends \AWonderPHP\ResourceManager\Stract\FileResource implements \AWonderPHP\ResourceManager\Face\JavaScriptResource
 {
     // Inherited property from FileResource
@@ -41,6 +44,12 @@ class JavaScriptResource extends \AWonderPHP\ResourceManager\Stract\FileResource
      * @var bool
      */
     protected $nomodule = false;
+    
+    /**
+     * The directory where JavaScripts are installed. This would be the
+     * vendor directory in composer installs.
+     */
+    protected $base;
 
     /**
      * Parses the $json object and sets class properties
@@ -127,8 +136,9 @@ class JavaScriptResource extends \AWonderPHP\ResourceManager\Stract\FileResource
             }
         }
         if (isset($json->filepath)) {
-            if (file_exists($json->filepath)) {
-                $this->filepath = $json->filepath;
+            $filepath = $this->base . $json->filepath;
+            if (file_exists($filepath)) {
+                $this->filepath = $filepath;
             }
         }
     }
@@ -340,9 +350,11 @@ class JavaScriptResource extends \AWonderPHP\ResourceManager\Stract\FileResource
      * Constructor Function
      *
      * @param string $config The path to a JSON file that defines the script to be served
+     * @param string $base   The base directory for where JavaScript libraries get installed
      */
-    public function __construct($config)
+    public function __construct(string $config, string $base = '/usr/share/ccm/jscss')
     {
+        $this->base = $base;
         if (! file_exists($config)) {
             return false;
         }
