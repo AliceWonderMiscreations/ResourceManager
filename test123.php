@@ -35,7 +35,7 @@ var_dump($foo);
 
 echo "\n\n";
 
-echo "The hash in the json in hex, this is what it should come to in PHP base64 conversion:\n\n----\n[alice@localhost js]$ cat jquery-3.3.1.min.js |libressl dgst -sha256 -binary |libressl enc -base64 -A\nFgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\n----\n\n";
+echo "The hash in the json is hex, this is what it should come to in PHP base64 conversion:\n\n----\n[alice@localhost js]$ cat jquery-3.3.1.min.js |libressl dgst -sha256 -binary |libressl enc -base64 -A\nFgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\n----\n\n";
 
 echo "Testing class html output:\n";
 $string = $foo->generateScriptString();

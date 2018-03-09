@@ -1,5 +1,5 @@
-\AWonderPHP\ResourceManager
-===========================
+ResourceManager
+===============
 
 Nothing here of actual use yet.
 
@@ -31,5 +31,9 @@ The github
 has jQuery in it that I plan to use when I experiment with getting this working.
 
 Thoughts are appreciated.
+
+Tests are in the file [test123.php](test123.php) using content from the
+CommonJS github mentioned above. Hard-coded file paths, you will have to
+modify them to your test needs.
 
 
