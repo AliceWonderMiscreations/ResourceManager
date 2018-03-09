@@ -107,7 +107,7 @@ abstract class FileResource
             $return .= $this->urlpath;
         }
         if (! is_null($this->urlquery)) {
-            $return .= '?' $this->urlquery;
+            $return .= '?' . $this->urlquery;
         }
         if (strlen($return) === 0) {
             return null;
