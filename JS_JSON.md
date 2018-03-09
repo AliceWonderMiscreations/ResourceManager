@@ -54,7 +54,7 @@ expect that github to ever be listed on packagist.
 When the web application needs jQuery 3 it would then ask for the object for it:
 
     $foo = new ResourceManager();
-    $obj = $foo->getJavaScript('awonderphp', 'commonjs', 'jquery', '3', 'min;);
+    $obj = $foo->getJavaScript('awonderphp', 'commonjs', 'jquery', '3', 'min');
 
 ResourceManager would then look for *script name* `jquery` identified as
 *version 3* with the `min` variant.
