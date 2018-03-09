@@ -354,7 +354,12 @@ class JavaScriptResource extends \AWonderPHP\ResourceManager\Stract\FileResource
      */
     public function __construct(string $config, string $base = '/usr/share/ccm/jscss')
     {
-        $this->base = $base;
+        if (substr($base, -1) === "/") {
+            $this->base = $base;
+        } else {
+            $base = $base . '/';
+            $this->base = $base;
+        }
         if (! file_exists($config)) {
             return false;
         }

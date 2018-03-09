@@ -15,10 +15,10 @@ spl_autoload_register(function ($class) {
   $CCM->loadClass($class);
 });
 
-spl_autoload_register(function ($class) {
-  global $CCM;
-  $CCM->localSystemClass($class);
-});
+//spl_autoload_register(function ($class) {
+//  global $CCM;
+//  $CCM->localSystemClass($class);
+//});
 
 // this is testing what I have, also not part of the project, just finding the bugs...
 
@@ -35,24 +35,30 @@ var_dump($foo);
 
 echo "\n\n";
 
+echo "The hash in the json in hex, this is what it should come to in PHP base64 conversion:\n\n----\n[alice@localhost js]$ cat jquery-3.3.1.min.js |libressl dgst -sha256 -binary |libressl enc -base64 -A\nFgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\n----\n\n";
+
+echo "Testing class html output:\n";
 $string = $foo->generateScriptString();
 
 echo $string;
 
 echo "\n\n";
 
+echo "Testing class html output with a nonce:\n";
 $string = $foo->generateScriptString(false, $nonce);
 
 echo $string;
 
 echo "\n\n";
 
+echo "Testing class xhtml output:\n";
 $string = $foo->generateScriptString(true);
 
 echo $string;
 
 echo "\n\n";
 
+echo "Testing class xhtml output with a nonce:\n";
 $string = $foo->generateScriptString(true, $nonce);
 
 echo $string;
@@ -69,12 +75,15 @@ $script = $foo->generateScriptDomNode($dom);
 $head->appendChild($script);
 
 $dom->formatOutput = true;
+
+echo "Testing DOMDocument generated script node via \$dom->saveXML()\n";
 $string = $dom->saveXML();
 
 print $string;
 
 echo "\n\n";
 
+echo "Testing DOMDocument generated script node via \$dom->saveHTML()\n";
 $string = $dom->saveHTML();
 
 print $string;
