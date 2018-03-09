@@ -46,6 +46,13 @@ class JavaScriptResource extends \AWonderPHP\ResourceManager\Stract\FileResource
     protected $nomodule = false;
     
     /**
+     * Set to a value by parseJson if set
+     *
+     * @var null|bool minified
+     */
+    protected $minified = null;
+    
+    /**
      * The directory where JavaScripts are installed. This would be the
      * vendor directory in composer installs.
      */
@@ -109,6 +116,12 @@ class JavaScriptResource extends \AWonderPHP\ResourceManager\Stract\FileResource
                 //FIXME exception
             }
             $this->nomodule = $json->nomodule;
+        }
+        if (isset($json->minified)) {
+            if (! is_bool($json->minified)) {
+                //FIXME exception
+            }
+            $this->minified = $json->minified;
         }
         if (isset($json->crossorigin)) {
             $crossorigin = trim(strtolower($json->crossorigin));
