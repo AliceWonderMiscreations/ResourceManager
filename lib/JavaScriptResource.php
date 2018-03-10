@@ -25,13 +25,6 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
     protected $async = false;
 
     /**
-     * Set to valid string by parseJson if needed
-     *
-     * @var null|string
-     */
-    protected $crossorigin = null;
-
-    /**
      * Set to true by parseJson if needed
      *
      * @var bool
@@ -210,16 +203,6 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
     }
 
     /**
-     * Returns null or the value to use with a script node crossorigin attribute
-     *
-     * @return null|string
-     */
-    public function getCrossOriginAttribute()
-    {
-        return $this->crossorigin;
-    }
-
-    /**
      * Returns whether or not to include a script node defer attribute
      *
      * @return bool
@@ -255,6 +238,16 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
     public function getNoModuleAttribute(): bool
     {
         return $this->nomodule;
+    }
+    
+    /**
+     * Returns whether or not the script is minified, or null
+     *
+     * @return null|bool
+     */
+    public function getMinified()
+    {
+        return $this->minified;
     }
 
     /**

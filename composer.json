@@ -14,7 +14,7 @@
     "require": {
         "php": "~7.1.0 || ~7.2.0",
         "awonderphp/notreallypsrresourcemanager": "dev-master",
-        "awonderphp/filewrapper": "dev-master",
+        "awonderphp/filewrapper": "^1.1",
         "psr/simple-cache": "^1.0"
     },
     "require-dev": {
