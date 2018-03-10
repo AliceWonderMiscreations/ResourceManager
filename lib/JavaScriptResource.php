@@ -142,6 +142,9 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
                 $a = 'b';
             }
             $this->checksum = $algo . ':' . $checksum;
+            if (is_null($this->crossorigin)) {
+                $this->crossorigin = 'anonymous';
+            }
         }
         if (isset($json->lastmod)) {
             if ($tstamp = strtotime($json->lastmod)) {
@@ -161,6 +164,7 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
      *
      * @return string
      */
+    /*
     public function getSrcAttribute(): string
     {
         if ((! is_null($this->urlscheme)) && (! is_null($this->urlhost))) {
@@ -176,6 +180,7 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
         }
         return $string;
     }
+    */
 
     /**
      * Returns the value to use with a script node src attribute
@@ -270,7 +275,10 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
             //throw \AWonderPHP\ResourceManager\Exception\InvalidArgumentException('first argument to generateScriptDomNode must be an instance of DOMDocument');
         }
         $script = $dom->createElement('script');
-        $script->setAttribute('src', $this->getSrcAttribute());
+        $src = $this->getSrcAttribute();
+        if (! is_null($src)) {
+            $script->setAttribute('src', $src);
+        }
         $script->setAttribute('type', $this->getTypeAttribute());
         if ($this->async) {
             $script->setAttribute('async', 'async');
@@ -313,7 +321,11 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
      */
     public function generateScriptString(bool $xml = false, $nonce = null)
     {
-        $string  = '<script src="' . $this->getSrcAttribute() . '"';
+        $string  = '<script';
+        $src = $this->getSrcAttribute();
+        if (! is_null($src)) {
+            $string = $string . ' src="' . $src . '"';
+        }
         $string .= ' type ="' . $this->getTypeAttribute() . '"';
         if ($this->async) {
             if ($xml) {

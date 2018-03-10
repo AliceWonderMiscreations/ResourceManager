@@ -119,6 +119,24 @@ class ResourceManager implements \AWonderPHP\NotReallyPsrResourceManager\Resourc
     }
     
     /**
+     * Attempts to find the JSON configuration file for the specified CSS and when
+     * found, returns a CssResource object
+     *
+     * @param string      $vendor  The top level vendor of the css, lower case
+     * @param string      $product The product name the css is part of, lower case
+     * @param string      $name    The basic name of the css (e.g. normalize), lower case
+     * @param int|string  $version The version of the css requested. If the argument is
+     *                             an integer, it should be recast as a string.
+     * @param null|string $variant The variant of the css requested
+     *
+     * @return null|\AWonderPHP\NotReallyPsrResourceManager\FileResource
+     */
+    public function getCss(string $vendor, string $product, string $name, $version, $variant = null)
+    {
+        return null;
+    }
+    
+    /**
      * The constructor
      *
      * @param string                               $base The base path where static JS/CSS are installed
