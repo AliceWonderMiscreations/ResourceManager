@@ -5,7 +5,7 @@ namespace AWonderPHP\ResourceManager;
 /**
  * A test implementation of the JavaScriptResource interface
  */
-class JavaScriptResource extends \AWonderPHP\ResourceManager\Stract\FileResource implements \AWonderPHP\ResourceManager\Face\JavaScriptResource
+class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileResource implements \AWonderPHP\NotReallyPsrResourceManager\JavaScriptResource
 {
     // Inherited property from FileResource
 
