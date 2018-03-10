@@ -11,7 +11,7 @@ namespace AWonderPHP\ResourceManager;
  * This implementation optionally utilizes PSR-16 cache but the interface does
  * not specify caching.
  */
-class ResourceManager implements \AWonderPHP\ResourceManager\Face\ResourceManager
+class ResourceManager implements \AWonderPHP\NotReallyPsrResourceManager\ResourceManager
 {
     /**
      * The base directory where JS/CSS are installed
@@ -39,7 +39,7 @@ class ResourceManager implements \AWonderPHP\ResourceManager\Face\ResourceManage
      *
      * @param string $key The key the object would be cached with
      *
-     * @return bool|\AWonderPHP\ResourceManager\Stract\FileResource
+     * @return bool|\AWonderPHP\NotReallyPsrResourceManager\FileResource
      */
     protected function getCachedResource(string $key)
     {
@@ -47,7 +47,7 @@ class ResourceManager implements \AWonderPHP\ResourceManager\Face\ResourceManage
             return false;
         }
         $obj = $this->cacheObj->get($key);
-        if ($obj instanceof \AWonderPHP\ResourceManager\Stract\FileResource) {
+        if ($obj instanceof \AWonderPHP\NotReallyPsrResourceManager\FileResource) {
             return $obj;
         }
         return false;
@@ -57,7 +57,7 @@ class ResourceManager implements \AWonderPHP\ResourceManager\Face\ResourceManage
      * Caches the resource
      *
      * @param string                                          $key The key the object is to be cached with
-     * @param \AWonderPHP\ResourceManager\Stract\FileResource $obj The object to cache
+     * @param \AWonderPHP\NotReallyPsrResourceManager\FileResource $obj The object to cache
      *
      * @return void
      */
@@ -80,7 +80,7 @@ class ResourceManager implements \AWonderPHP\ResourceManager\Face\ResourceManage
      *                             an integer, it should be recast as a string.
      * @param null|string $variant The variant of the script requested
      *
-     * @return null|\AWonderPHP\ResourceManager\Stract\FileResource
+     * @return null|\AWonderPHP\NotReallyPsrResourceManager\FileResource
      */
     public function getJavaScript(string $vendor, string $product, string $name, $version, $variant = null)
     {
@@ -94,7 +94,7 @@ class ResourceManager implements \AWonderPHP\ResourceManager\Face\ResourceManage
         }
         $key = $vendor . '-' . $product . '-' . $baseConf;
         $obj = $this->getCachedResource($key);
-        if ($obj instanceof \AWonderPHP\ResourceManager\Stract\FileResource) {
+        if ($obj instanceof \AWonderPHP\NotReallyPsrResourceManager\FileResource) {
             return $obj;
         }
         //okay see if the file exists
