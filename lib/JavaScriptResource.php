@@ -1,11 +1,21 @@
 <?php
+declare(strict_types = 1);
+
+/**
+ * An implementation of the JavaScriptResource interface
+ *
+ * @package AWonderPHP/ResourceManager
+ * @author  Alice Wonder <paypal@domblogger.net>
+ * @license https://opensource.org/licenses/MIT MIT
+ * @link    https://github.com/AliceWonderMiscreations/ResourceManager
+ */
 
 namespace AWonderPHP\ResourceManager;
 
 /**
- * A test implementation of the JavaScriptResource interface
+ * An implementation of the JavaScriptResource interface
  */
-class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileResource implements \AWonderPHP\NotReallyPsrResourceManager\JavaScriptResource
+class JavaScriptResource extends \AWonderPHP\FileResource\FileResource implements \AWonderPHP\NotReallyPsrResourceManager\JavaScriptResource
 {
     // Inherited property from FileResource
 
@@ -151,29 +161,6 @@ class JavaScriptResource extends \AWonderPHP\NotReallyPsrResourceManager\FileRes
             }
         }
     }
-
-    /**
-     * Returns the value to use with a script node src attribute
-     *
-     * @return string
-     */
-    /*
-    public function getSrcAttribute(): string
-    {
-        if ((! is_null($this->urlscheme)) && (! is_null($this->urlhost))) {
-            $string = $this->urlscheme . '://' . $this->urlhost;
-        } else {
-            $string = '';
-        }
-        if (! is_null($this->urlpath)) {
-            $string .= $this->urlpath;
-        }
-        if (! is_null($this->urlquery)) {
-            $string = $string . '?' . $this->urlquery;
-        }
-        return $string;
-    }
-    */
 
     /**
      * Returns the value to use with a script node src attribute

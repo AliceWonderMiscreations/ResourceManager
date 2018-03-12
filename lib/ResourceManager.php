@@ -1,4 +1,17 @@
 <?php
+declare(strict_types = 1);
+
+/**
+ * A proof of concept implementation of the ResourceManager interface.
+ *
+ * This class locates the JSON configuration files needed to create JavaScriptResource objects
+ * and CssResource objects and returns the objects (or null on failure).
+ *
+ * @package AWonderPHP/ResourceManager
+ * @author  Alice Wonder <paypal@domblogger.net>
+ * @license https://opensource.org/licenses/MIT MIT
+ * @link    https://github.com/AliceWonderMiscreations/ResourceManager
+ */
 
 namespace AWonderPHP\ResourceManager;
 
@@ -39,7 +52,7 @@ class ResourceManager implements \AWonderPHP\NotReallyPsrResourceManager\Resourc
      *
      * @param string $key The key the object would be cached with
      *
-     * @return bool|\AWonderPHP\NotReallyPsrResourceManager\FileResource
+     * @return bool|\AWonderPHP\FileResource\FileResource
      */
     protected function getCachedResource(string $key)
     {
@@ -47,7 +60,7 @@ class ResourceManager implements \AWonderPHP\NotReallyPsrResourceManager\Resourc
             return false;
         }
         $obj = $this->cacheObj->get($key);
-        if ($obj instanceof \AWonderPHP\NotReallyPsrResourceManager\FileResource) {
+        if ($obj instanceof \AWonderPHP\FileResource\FileResource) {
             return $obj;
         }
         return false;
@@ -57,7 +70,7 @@ class ResourceManager implements \AWonderPHP\NotReallyPsrResourceManager\Resourc
      * Caches the resource
      *
      * @param string                                          $key The key the object is to be cached with
-     * @param \AWonderPHP\NotReallyPsrResourceManager\FileResource $obj The object to cache
+     * @param \AWonderPHP\FileResource\FileResource $obj The object to cache
      *
      * @return void
      */
@@ -80,7 +93,7 @@ class ResourceManager implements \AWonderPHP\NotReallyPsrResourceManager\Resourc
      *                             an integer, it should be recast as a string.
      * @param null|string $variant The variant of the script requested
      *
-     * @return null|\AWonderPHP\NotReallyPsrResourceManager\FileResource
+     * @return null|\AWonderPHP\NotReallyPsrResourceManager\JavaScriptResource
      */
     public function getJavaScript(string $vendor, string $product, string $name, $version, $variant = null)
     {
@@ -94,7 +107,7 @@ class ResourceManager implements \AWonderPHP\NotReallyPsrResourceManager\Resourc
         }
         $key = $vendor . '-' . $product . '-' . $baseConf;
         $obj = $this->getCachedResource($key);
-        if ($obj instanceof \AWonderPHP\NotReallyPsrResourceManager\FileResource) {
+        if ($obj instanceof \AWonderPHP\NotReallyPsrResourceManager\JavaScriptResource) {
             return $obj;
         }
         //okay see if the file exists
@@ -129,7 +142,7 @@ class ResourceManager implements \AWonderPHP\NotReallyPsrResourceManager\Resourc
      *                             an integer, it should be recast as a string.
      * @param null|string $variant The variant of the css requested
      *
-     * @return null|\AWonderPHP\NotReallyPsrResourceManager\FileResource
+     * @return null|\AWonderPHP\NotReallyPsrResourceManager\CssResource
      */
     public function getCss(string $vendor, string $product, string $name, $version, $variant = null)
     {

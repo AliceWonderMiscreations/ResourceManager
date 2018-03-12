@@ -1,4 +1,14 @@
 <?php
+declare(strict_types = 1);
+
+/**
+ * An implementation of the ResourceServer interface
+ *
+ * @package AWonderPHP/ResourceManager
+ * @author  Alice Wonder <paypal@domblogger.net>
+ * @license https://opensource.org/licenses/MIT MIT
+ * @link    https://github.com/AliceWonderMiscreations/ResourceManager
+ */
 
 namespace AWonderPHP\ResourceManager;
 
@@ -7,7 +17,7 @@ namespace AWonderPHP\ResourceManager;
  */
 
 // okay this is broken but soon it won't be
-class ResourceServer implements \AWonderPHP\NotReallyPsrResourceManager\ResourceServer
+class ResourceServer extends \AWonderPHP\FileResource\ResourceServer implements \AWonderPHP\NotReallyPsrResourceManager\ResourceServer
 {
     /**
      * How long the client should cache the file for. Set by constructor.
@@ -22,56 +32,6 @@ class ResourceServer implements \AWonderPHP\NotReallyPsrResourceManager\Resource
      * @var string
      */
     protected $base = '/usr/share/ccm/jscss/';
-
-    
-    /**
-     * Serves a file specified in a FileResource object.
-     *
-     * @param \AWonderPHP\NotReallyPsrResourceManager\FileResource $fileResource The FileResource object
-     *                                                                           for what we want to serve.
-     * @param bool                                                 $minify       Should we attempt to minify?
-     *
-     * @return bool True on success, False on failure
-     */
-    public function serveFileResource($fileResource, bool $minify = false): bool
-    {
-        $filepath = $fileResource->getFilepath();
-        if (is_null($filepath)) {
-            // FIXME throw exception
-            return false;
-        }
-        if (! file_exists($filepath)) {
-            // FIXME throw exception
-            return false;
-        }
-        $mime = $fileResource->getMimeType();
-
-        if (method_exists($fileResource, 'getMinified')) {
-            $minified = $fileResource->getMinified();
-            if (is_null($minified)) {
-                $minify = false;
-            } else {
-                if ($minified) {
-                    $minify = false;
-                }
-            }
-        } else {
-            $minify = false;
-        }
-        $chk = $fileResource->getChecksum();
-        if (! is_null($chk)) {
-            $minify = false;
-        }
-        $ts = $fileResource->getTimestamp();
-        $origin = null;
-        $crossorigin = $fileResource->getCrossOrigin();
-        if (! is_null($crossorigin)) {
-            $origin = '*';
-        }
-      
-        $wrapper = new \AWonderPHP\ResourceManager\FileWrapper($filepath, $mime, $ts, $origin, $this->maxage, $minify);
-        return $wrapper->sendfile();
-    }
     
     /**
      * Fetches the JavaScriptResource object described by the parameters and then serves the file.
@@ -82,18 +42,17 @@ class ResourceServer implements \AWonderPHP\NotReallyPsrResourceManager\Resource
      * @param int|string  $version The version of the script requested. If the argument is
      *                             an integer, it should be recast as a string.
      * @param null|string $variant The variant of the script requested
-     * @param boolean     $minify  Whether or not an attempt to minify non-minified scripts should be done
      *
      * @return bool True on success, False on failure
      */
-    public function serveJavaScript(string $vendor, string $product, string $name, $version, $variant = null, bool $minify = false): bool
+    public function serveJavaScript(string $vendor, string $product, string $name, $version, $variant = null): bool
     {
         $RM = new ResourceManager($this->base);
         $obj = $RM->getJavaScript($vendor, $product, $name, $version, $variant);
-        if (! $obj instanceof \AWonderPHP\NotReallyPsrResourceManager\FileResource) {
+        if (! $obj instanceof \AWonderPHP\FileResource\FileResource) {
             return false;
         }
-        return $this->serveFileResource($obj, $minify);
+        return $this->serveFileResource($obj);
     }
     
     /**
@@ -109,7 +68,7 @@ class ResourceServer implements \AWonderPHP\NotReallyPsrResourceManager\Resource
      *
      * @return bool True on success, False on failure
      */
-    public function serveCss(string $vendor, string $product, string $name, $version, $variant = null, bool $minify = false)
+    public function serveCss(string $vendor, string $product, string $name, $version, $variant = null)
     {
         return false;
     }
